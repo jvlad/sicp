@@ -17,16 +17,6 @@
 (define (branch-structure branch)
   (car (cdr branch)))  
 
-(define m1 
-  (make-mobile 
-   (make-branch 1 1)
-   (make-branch 1 3)))
-
-(define m2 
-  (make-mobile 
-   (make-branch 1 m1)
-   (make-branch 1 3)))
-
 (define (weigh_branch branch)
     (if (pair? (branch-structure branch))
         (+ (weigh_branch (left-branch (branch-structure branch)))
@@ -59,7 +49,7 @@
         (weigh_branch (right-branch mobile)))
 )
 
-(define (balanced_branch branch)
+(define (balanced_branch? branch)
     (if (pair? (branch-structure branch))
         (balanced? (branch-structure branch))
         #t
@@ -88,3 +78,27 @@ Suppose we change the representation of mobiles so that the constructors are
 
 A: only `(right-branch mobile)` and `(branch-structure branch)` needs to be changed
 
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+; tests  
+
+(define m1 
+  (make-mobile 
+   (make-branch 1 1)
+   (make-branch 1 3)))
+
+(define m2 
+  (make-mobile 
+   (make-branch 1 m1)
+   (make-branch 1 3)))
+
+(define m3 
+    (make-mobile 
+        (make-branch 1 6)
+        (make-branch 1 6)))
+
+(define m4 
+  (make-mobile 
+   (make-branch 1 m1)
+   (make-branch 2 6)))
