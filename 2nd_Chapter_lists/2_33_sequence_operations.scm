@@ -10,6 +10,17 @@
             (cons (p x) y)) 
         nil sequence))
 
+(define (enumerate-interval low high)
+  (if (> low high)
+      nil
+      (cons low (enumerate-interval (+ low 1) high))))
+
+(define (enumerate-tree tree)
+  (cond ((null? tree) nil)
+        ((not (pair? tree)) (list tree))
+        (else (append (enumerate-tree (car tree))
+                      (enumerate-tree (cdr tree))))))
+
 (define (append seq1 seq2)
   (accumulate cons seq2 seq1))
 
