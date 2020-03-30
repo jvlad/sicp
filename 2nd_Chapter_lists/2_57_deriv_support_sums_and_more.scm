@@ -27,9 +27,7 @@
         ((product? exp)
          (make-sum
            (make-product (multiplier exp)
-                        ; x 
                          (deriv (multiplicand exp) var))
-                            ; (deriv y var))
            (make-product (deriv (multiplier exp) var)
                          (multiplicand exp))))
         ((exponentiation? exp) 
