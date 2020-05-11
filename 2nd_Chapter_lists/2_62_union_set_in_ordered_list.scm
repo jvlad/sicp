@@ -1,0 +1,60 @@
+; ###### Wed Apr 15 22:06:22 MSK 2020
+
+(define (union-set lhs rhs)
+    (cond ((null? lhs) rhs)
+        ((null? rhs) lhs)
+        ((< (car lhs) (car rhs))
+            (union-set lhs (union-set (cdr lhs) rhs))
+        )
+        (else)
+    )
+)
+
+
+; ###### Fri Apr 3 20:06:04 MSK 2020
+
+(define (union-set set1 set2)
+    (define (merge_sorted_set lhs rhs result)
+        (cond ((null? lhs) (append result rhs))
+            ((null? rhs) (append result lhs))
+            ((< (car lhs) (car rhs)) 
+                (merge_sorted_set (cdr lhs) rhs (append result (list (car lhs))))
+            )
+            ((> (car lhs) (car rhs)) 
+                (merge_sorted_set lhs (cdr rhs) (append result (list (car rhs))))
+            )
+            (else (merge_sorted_set (cdr lhs) rhs result))
+        )
+    )
+    (merge_sorted_set set1 set2 nil)
+)
+
+(define (union-set lhs rhs)
+    (cond ((null? lhs) rhs)
+        ((null? rhs) lhs)
+        ((< (car lhs) (car rhs)) 
+            (union-set (cdr lhs) (cons (car lhs) rhs))
+        )
+        ((> (car lhs) (car rhs)) 
+            (cons (car rhs) (union-set lhs (cdr rhs)))
+        )
+        (else (union-set (cdr lhs) rhs))
+    )
+)
+
+
+(1 2) (3 4)
+(2) (1 3 4)
+
+
+(union-set '(1 2 3) '(2 3 4 5))
+(union-set '(3) '(1 3))
+(union-set '() '(4))
+(union-set '(4) '(4))
+(union-set '(4) '(0))
+(union-set '(4) '())
+(union-set '(5 8 9) '(1 4 5))
+(union-set '(5 8 9) '(6 8 10 11))
+(union-set '(5 8 9) '(9 10 11 12))
+(union-set '(1 2 3) '(4 5 11 98))
+(union-set '(4 5 11 98) '(1 2 3))
