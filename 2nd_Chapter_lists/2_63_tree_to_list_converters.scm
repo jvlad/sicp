@@ -137,3 +137,26 @@ tree == (`it2`)
             k*log(k)/2 + k
             k*log(k)
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(define (tree->list-2 tree)
+  (define (copy-to-list tree result-list)
+    (if (null? tree)
+        result-list
+        (copy-to-list (left-branch tree)
+                      (cons (entry tree)
+                            (copy-to-list (right-branch tree)
+                                          result-list)))))
+  (copy-to-list tree '()))  
+
+
+    T(n) = 2*T(n/2)
+    T(n) = 4*T(n/4)
+    T(n) = 8*T(n/8)
+    number of transformations: log(n)
+    =>
+    T(n) = n*T(1)
+
+    Answer: linear growth order  
+
+    
