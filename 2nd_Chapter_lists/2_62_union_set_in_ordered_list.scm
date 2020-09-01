@@ -42,9 +42,57 @@
     )
 )
 
+;###### Mon May 11 23:27:31 MSK 2020  
 
-(1 2) (3 4)
-(2) (1 3 4)
+(define (union-set lhs rhs)
+    (cond ((null? lhs) rhs)
+        ((null? rhs) lhs)
+        ((< (car lhs) (car rhs)) 
+            (cons (car lhs) (union-set (cdr lhs) rhs))
+        )
+        ((= (car lhs) (car rhs))
+            (cons (car lhs) (union-set (cdr lhs) (cdr rhs)))
+        )
+        (else 
+            (cons (car rhs) (union-set lhs (cdr rhs)))
+        )
+    )
+)
+
+(define (union-set lhs rhs)
+    (define (union_set_iter lhs rhs result)
+        ()
+        body)
+)
+
+(1 3)
+(2 4)
+()
+
+(3)
+(2 4)
+(1)
+
+(3)
+(4)
+(1)  2
+
+(1 2) (cons (car result) element)
+
+()
+(4) 
+(1 2) 3
+
+in
+    element: 3 
+    result: (1 (2 nil))
+    last_pair: (2 nil)
+out
+    a: (list (car last_pair) element) --> (2 3 nil)
+    result: (cons (car result) a) --> (1 2 3 nil)
+    last_pair: (list element) --> (3 nil)
+
+
 
 
 (union-set '(1 2 3) '(2 3 4 5))
@@ -58,3 +106,84 @@
 (union-set '(5 8 9) '(9 10 11 12))
 (union-set '(1 2 3) '(4 5 11 98))
 (union-set '(4 5 11 98) '(1 2 3))
+
+
+
+
+
+
+
+
+
+
+
+
+
+list
+rec_call(source, res, -1)
+
+rec_call(source, res) {
+    if () {
+        ...
+        rec_call(source, res, )
+    } else {
+        ...
+        return res
+    }
+}
+
+original source (1 2 3 4)
+
+(1 4)
+(1 2 3 4)
+
+n: size(res) == n-k
+n-1: size(res) == n-k-k1
+n-c: size(res) == n-(k)
+
+X - const, X >= k_i
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+(4 2 3 1)
+(cons 
+
+source: ()
+res: 
+for() {
+    source = 
+    res = 
+}
+
+source
+res
+for() {
+    source = 
+    res = 
+}
+
+source
+res
+for() {
+    source = 
+    res = 
+}
