@@ -1,5 +1,6 @@
 ; ###### Thu Apr 2 21:40:57 MSK 2020
 
+; O(n) 
 (define (adjoin-set x set)  
     (cond ((null? set) (list x))
         ((= x (car set)) set)
