@@ -136,3 +136,34 @@ Stack:
 
 (define (intersection-set lhs rhs)
 )
+
+
+n:      n - k1                  >=k1
+n-1:    n - k1 - k2             >=(k1 + k2)
+n-m:    n - M
+x > m
+n - x:  n - M - X, X >= 0       
+.       n - sum(k1..kx)
+        n - sum(k1..kx) >= n - x*K      sum(k1..kx) <= y <= n, sum(k1..kx) <= x*K
+                                        <=x*K 
+.
+.
+1
+
+n:      n - k1                  <=l1
+n-1:    n - k1 - k2             <=(l1 + l2)
+n-m:    n - M
+x > m
+n - x:  n - M - X, X >= 0       <=sum(l1..lx) <=x*L
+        n - sum(k1..kx), 
+        K >= kx: 
+        n - sum(k1..kx) >= n - x*K      
+                                        
+        R, R >= max(K, L)
+        >= (n - x*R)            <=(x*R)
+.
+.
+1       >= (n - n*R)            n <= (n*R)
+        0 >= (n - n*R)          R >= 1
+        R >= 1, R >= kx 
+        
