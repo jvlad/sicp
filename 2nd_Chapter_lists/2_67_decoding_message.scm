@@ -1,18 +1,30 @@
 ; ###### Thu Aug 12 20:18:41 CEST 2021
 
-(define (make-leaf symbol weight)
+; Define an encoding tree and a sample message:
+; (define sample_tree
+;   (make_code_tree (make_leaf 'A 4)
+;                   (make_code_tree
+;                    (make_leaf 'B 2)
+;                    (make_code_tree (make_leaf 'D 1)
+;                                    (make_leaf 'C 1)))))
+ 
+; (define sample_message '(0 1 1 0 0 1 0 1 0 1 1 1 0))
+; Use the decode procedure to decode the message, and give the result.
+
+
+(define (make_leaf symbol weight)
   (list 'leaf symbol weight))
 
 (define (leaf? object)
   (eq? (car object) 'leaf))
 
-(define (symbol-leaf x) (cadr x))
+(define (symbol_leaf x) (cadr x))
 
-(define (weight-leaf x) (caddr x))
+(define (weight_leaf x) (caddr x))
 
 
 
-(define (make-code-tree left right)
+(define (make_code_tree left right)
   (list left
         right
         (append (symbols left) (symbols right))
@@ -21,57 +33,57 @@
 
 
 
-(define (left-branch tree) (car tree))
+(define (left_branch tree) (car tree))
 
-(define (right-branch tree) (cadr tree))
+(define (right_branch tree) (cadr tree))
 
 (define (symbols tree)
   (if (leaf? tree)
-      (list (symbol-leaf tree))
+      (list (symbol_leaf tree))
       (caddr tree)))
 
 (define (weight tree)
   (if (leaf? tree)
-      (weight-leaf tree)
+      (weight_leaf tree)
       (cadddr tree)))
 
 
 
-(define (make-leaf-set pairs)
+(define (make_leaf_set pairs)
   (if (null? pairs)
       '()
       (let ((pair (car pairs)))
-        (adjoin-set (make-leaf (car pair)    ; symbol
+        (adjoin_set (make_leaf (car pair)    ; symbol
                                (cadr pair))  ; frequency
-                    (make-leaf-set (cdr pairs))))))
+                    (make_leaf_set (cdr pairs))))))
 
 
 
 (define (decode bits tree)
-  (define (decode-1 bits current-branch)
+  (define (decode_1 bits current_branch)
     (if (null? bits)
         '()
-        (let ((next-branch
-               (choose-branch (car bits) current-branch)))
-          (if (leaf? next-branch)
-              (cons (symbol-leaf next-branch)
-                    (decode-1 (cdr bits) tree))
-              (decode-1 (cdr bits) next-branch)))))
-  (decode-1 bits tree))
+        (let ((next_branch
+               (choose_branch (car bits) current_branch)))
+          (if (leaf? next_branch)
+              (cons (symbol_leaf next_branch)
+                    (decode_1 (cdr bits) tree))
+              (decode_1 (cdr bits) next_branch)))))
+  (decode_1 bits tree))
 
-(define (choose-branch bit branch)
-  (cond ((= bit 0) (left-branch branch))
-        ((= bit 1) (right-branch branch))
-        (else (error "bad bit -- CHOOSE-BRANCH" bit))))
+(define (choose_branch bit branch)
+  (cond ((= bit 0) (left_branch branch))
+        ((= bit 1) (right_branch branch))
+        (else (error "bad bit __ CHOOSE_BRANCH" bit))))
 
 
-(define sample-tree
-  (make-code-tree (make-leaf 'A 4)
-                  (make-code-tree
-                   (make-leaf 'B 2)
-                   (make-code-tree (make-leaf 'D 1)
-                                   (make-leaf 'C 1)))))
+(define sample_tree
+  (make_code_tree (make_leaf 'A 4)
+                  (make_code_tree
+                   (make_leaf 'B 2)
+                   (make_code_tree (make_leaf 'D 1)
+                                   (make_leaf 'C 1)))))
 
-(define sample-message '(0 1 1 0 0 1 0 1 0 1 1 1 0))
+(define sample_message '(0 1 1 0 0 1 0 1 0 1 1 1 0))
 
-(decode sample-message sample-tree)
+(decode sample_message sample_tree)
