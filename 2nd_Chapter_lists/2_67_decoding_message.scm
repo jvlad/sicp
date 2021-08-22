@@ -31,8 +31,6 @@
         (+ (weight left) (weight right))))
 
 
-
-
 (define (left_branch tree) (car tree))
 
 (define (right_branch tree) (cadr tree))
@@ -47,6 +45,8 @@
       (weight_leaf tree)
       (cadddr tree)))
 
+
+; ######################################################
 
 
 (define (make_leaf_set pairs)

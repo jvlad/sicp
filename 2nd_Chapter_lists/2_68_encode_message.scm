@@ -18,6 +18,40 @@
 ; encoding the result you obtained in Exercise 2_67 with the sample tree and seeing whether
 ; it is the same as the original sample message.
 
+
+(define (make_leaf symbol weight)
+  (list 'leaf symbol weight))
+
+(define (leaf? object)
+  (eq? (car object) 'leaf))
+
+(define (symbol_leaf x) (cadr x))
+
+(define (weight_leaf x) (caddr x))
+
+(define (make_code_tree left right)
+  (list left
+        right
+        (append (symbols left) (symbols right))
+        (+ (weight left) (weight right))))
+
+
+(define (left_branch tree) (car tree))
+
+(define (right_branch tree) (cadr tree))
+
+(define (symbols tree)
+  (if (leaf? tree)
+      (list (symbol_leaf tree))
+      (caddr tree)))
+
+(define (weight tree)
+  (if (leaf? tree)
+      (weight_leaf tree)
+      (cadddr tree)))
+
+; ##########################
+
 (define (left_branch tree) (car tree))
 
 (define (right_branch tree) (cadr tree))
@@ -48,11 +82,10 @@
 
 (define (encode_symbol symb tree)
     (define (encode_symbol_rec symb tree resulting_path)
-        (cond ((not (contains symb (symbols tree)))
-            (display 'error))
+        (cond ((not (contains symb (symbols tree))) (display '(internal error)))
             ((leaf? tree) resulting_path)
             ((contains symb (left_branch tree)) (encode_symbol_rec symb (left_branch tree) (append resulting_path (list 0))))
-            (else (encode_symbol_rec symb (left_branch tree) (append resulting_path (list 1))))
+            (else (encode_symbol_rec symb (right_branch tree) (append resulting_path (list 1))))
         )
     )
     (encode_symbol_rec symb tree '())
@@ -65,10 +98,14 @@
                    (make_code_tree (make_leaf 'D 1)
                                    (make_leaf 'C 1)))))
 
-(define (sample_message '(A)))
+(define sample_message 'B)
 
-(define (make_code_tree left right)
-  (list left
-        right
-        (append (symbols left) (symbols right))
-        (+ (weight left) (weight right))))
+(encode_symbol sample_message sample_tree)
+
+(define sample_message '(A D A B B C A))
+
+(encode sample_message sample_tree)
+
+; Output: (0 1 1 0 0 1 0 1 0 1 1 1 0)
+; Expected: (0 1 1 0 0 1 0 1 0 1 1 1 0)  
+
